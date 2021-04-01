@@ -6,6 +6,7 @@
 #include "UObject/Script.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/UObjectBaseUtility.h"
+#include "UObject/WeakObjectPtr.h"
 #include "ProfilingDebugging/ResourceSize.h"
 #include "PrimaryAssetId.h"
 
@@ -51,6 +52,13 @@ class COREUOBJECT_API UObject : public UObjectBaseUtility
 	UObject( EStaticConstructor, EObjectFlags InFlags );
 	/** DO NOT USE. This constructor is for internal usage only for hot-reload purposes. */
 	UObject(FVTableHelper& Helper);
+
+	// JackGame: changes in DQXI, adds 0x10 to UObject size and offsets
+	// UObject::GetArchetype() was also updated to cache the archetype here instead of looking it up every time
+	// But that needs changes to GetArchetypeFromRequiredInfo and a bunch of other things too though...
+	// Those aren't needed for us to match the struct, so meh
+	TWeakObjectPtr<class UObject>	CachedObjectArchetype;
+	bool							CachedObjectArchetype_IsSet;
 
 	static void StaticRegisterNativesUObject() 
 	{
