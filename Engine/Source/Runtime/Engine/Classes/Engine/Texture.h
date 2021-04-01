@@ -314,6 +314,10 @@ struct FTexturePlatformData
 	int32 NumSlices;
 	/** Format in which mip data is stored. */
 	EPixelFormat PixelFormat;
+
+	// JackGame: unknown flag added by DQXI, moves Mips field from 0x10 to 0x18
+	bool Unknown10;
+
 	/** Mip data. */
 	TIndirectArray<struct FTexture2DMipMap> Mips;
 

@@ -959,6 +959,9 @@ static void SerializePlatformData(
 		FString PixelFormatString = PixelFormatEnum->GetNameByValue(PlatformData->PixelFormat).GetPlainNameString();
 		Ar << PixelFormatString;
 	}
+
+	// JackGame: unknown flag added by DQXI, moves Mips field from 0x10 to 0x18
+	Ar << PlatformData->Unknown10;
 	
 	int32 NumMips = PlatformData->Mips.Num();
 	int32 FirstMipToSerialize = 0;
