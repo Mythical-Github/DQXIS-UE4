@@ -58,7 +58,12 @@ class COREUOBJECT_API UObject : public UObjectBaseUtility
 	// But that needs changes to GetArchetypeFromRequiredInfo and a bunch of other things too though...
 	// Those aren't needed for us to match the struct, so meh
 	TWeakObjectPtr<class UObject>	CachedObjectArchetype;
+
+	// JackGame: WITH_CASE_PRESERVING_NAME increases size of FName, which increases size of UObject
+	// If thats set lets not include this field, so that UObject size should match up with non-WITH_CASE_PRESERVING_NAME builds
+#if !WITH_CASE_PRESERVING_NAME
 	bool							CachedObjectArchetype_IsSet;
+#endif
 
 	static void StaticRegisterNativesUObject() 
 	{
