@@ -1163,6 +1163,13 @@ bool CreatePakFile(const TCHAR* Filename, TArray<FPakInputPair>& FilesToAdd, con
 			// Write to file
 			int64 Offset = PakFileHandle->Tell();
 			NewEntry.Info.Serialize(*PakFileHandle, FPakInfo::PakFile_Version_Latest);
+
+			// JackGame: 'encrypt' file data with DQXI algo
+			// TODO: how should NOT be handled tho?
+			uint8 JackGameKey[] = { 0xDE, 0xAD, 0xFA, 0xDE, 0xBE, 0xEF, 0xCA, 0xFE };
+			for (int i = 0; i < SizeToWrite; i++)
+				DataToWrite[i] ^= JackGameKey[i % 8];
+
 			PakFileHandle->Serialize(DataToWrite, SizeToWrite);	
 			int64 EndOffset = PakFileHandle->Tell();
 
@@ -1233,7 +1240,15 @@ bool CreatePakFile(const TCHAR* Filename, TArray<FPakInputPair>& FilesToAdd, con
 	for (int32 EntryIndex = 0; EntryIndex < Index.Num(); EntryIndex++)
 	{
 		FPakEntryPair& Entry = Index[EntryIndex];
-		IndexWriter << Entry.Filename;
+
+		// JackGame: 'encrypt' filename with DQXI algo
+		FString JackFilename = Entry.Filename;
+		uint8 JackGameKey[] = { 0xDE, 0xAD, 0xFA, 0xDE, 0xBE, 0xEF, 0xCA, 0xFE };
+		auto RawFilename = JackFilename.GetCharArray();
+		for (int i = 0; i < JackFilename.Len(); i++)
+			RawFilename[i] = ((uint8)RawFilename[i] ^ JackGameKey[i % 8]);
+
+		IndexWriter << JackFilename;
 		Entry.Info.Serialize(IndexWriter, Info.Version);
 
 		if (RequiredPatchPadding > 0)

@@ -1,4 +1,4 @@
-﻿// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "IPlatformFilePak.h"
 #include "HAL/FileManager.h"
@@ -3189,6 +3189,12 @@ public:
 			check(Block.ProcessedSize > 0);
 			INC_MEMORY_STAT_BY(STAT_AsyncFileMemory, Block.ProcessedSize);
 			Output = (uint8*)FMemory::Malloc(Block.ProcessedSize);
+
+			// JackGame: 'decrypt' file data with DQXI algo
+			uint8 JackGameKey[] = { 0xDE, 0xAD, 0xFA, 0xDE, 0xBE, 0xEF, 0xCA, 0xFE };
+			for (int i = 0; i < Block.RawSize; i++)
+				Block.Raw[i] ^= JackGameKey[i % 8];
+
 			FCompression::UncompressMemory((ECompressionFlags)FileEntry->CompressionMethod, Output, Block.ProcessedSize, Block.Raw, Block.RawSize, false, FPlatformMisc::GetPlatformCompression()->GetCompressionBitWindow());
 			FMemory::Free(Block.Raw);
 			Block.Raw = nullptr;
@@ -3542,6 +3548,12 @@ public:
 			// Decrypt and Uncompress from memory to memory.
 			int64 EncryptionSize = EncryptionPolicy::AlignReadRequest(CompressedSize);
 			EncryptionPolicy::DecryptBlock(CompressedBuffer, EncryptionSize);
+
+			// JackGame: 'decrypt' file data with DQXI algo
+			uint8 JackGameKey[] = { 0xDE, 0xAD, 0xFA, 0xDE, 0xBE, 0xEF, 0xCA, 0xFE };
+			for (int i = 0; i < CompressedSize; i++)
+				CompressedBuffer[i] ^= JackGameKey[i % 8];
+
 			FCompression::UncompressMemory(Flags, UncompressedBuffer, UncompressedSize, CompressedBuffer, CompressedSize, false, FPlatformMisc::GetPlatformCompression()->GetCompressionBitWindow());
 			if (CopyOut)
 			{
@@ -3843,6 +3855,9 @@ void FPakFile::LoadIndex(FArchive* Reader)
 		IndexReader << MountPoint;
 		IndexReader << NumEntries;
 
+		// JackGame: replacement done by DQXI
+		MountPoint = MountPoint.Replace(TEXT("JackGame/"), TEXT("Game/"));
+
 		MakeDirectoryFromPath(MountPoint);
 		// Allocate enough memory to hold all entries (and not reallocate while they're being added to it).
 		Files.Empty(NumEntries);
@@ -3853,6 +3868,16 @@ void FPakFile::LoadIndex(FArchive* Reader)
 			FPakEntry Entry;
 			FString Filename;
 			IndexReader << Filename;
+
+			// JackGame: 'decrypt' filename with DQXI algo
+			uint8 JackGameKey[] = { 0xDE, 0xAD, 0xFA, 0xDE, 0xBE, 0xEF, 0xCA, 0xFE };
+			auto RawFilename = Filename.GetCharArray();
+			for (int i = 0; i < Filename.Len(); i++)
+				RawFilename[i] = ((uint8)RawFilename[i] ^ JackGameKey[i % 8]);
+
+			// JackGame: replacement done by DQXI
+			Filename = Filename.Replace(TEXT("JackGame/"), TEXT("Game/"));
+
 			Entry.Serialize(IndexReader, Info.Version);
 
 			// Add new file info.
