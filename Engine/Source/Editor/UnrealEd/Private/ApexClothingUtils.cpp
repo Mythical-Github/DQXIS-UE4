@@ -201,8 +201,8 @@ void RemoveAssetFromSkeletalMesh(USkeletalMesh* SkelMesh, uint32 AssetIndex, boo
 	}
 
 
-	apex::ClothingAsset* ApexClothingAsset = SkelMesh->ClothingAssets_DEPRECATED[AssetIndex].ApexClothingAsset;	//Can't delete apex asset until after apex actors so we save this for now and reregister component (which will trigger the actor delete)
-	SkelMesh->ClothingAssets_DEPRECATED.RemoveAt(AssetIndex);	//have to remove the asset from the array so that new actors are not created for asset pending deleting
+	apex::ClothingAsset* ApexClothingAsset = SkelMesh->ClothingAssets[AssetIndex].ApexClothingAsset;	//Can't delete apex asset until after apex actors so we save this for now and reregister component (which will trigger the actor delete)
+	SkelMesh->ClothingAssets.RemoveAt(AssetIndex);	//have to remove the asset from the array so that new actors are not created for asset pending deleting
 	ReregisterSkelMeshComponents(SkelMesh);
 
 	if(bReleaseAsset)

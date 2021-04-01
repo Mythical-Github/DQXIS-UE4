@@ -2746,7 +2746,7 @@ void USkeletalMesh::GetResourceSizeEx(FResourceSizeEx& CumulativeResourceSize)
 			MorphTarget->GetResourceSizeEx(CumulativeResourceSize);
 		}
 
-		for(const FClothingAssetData_Legacy& LegacyAsset : ClothingAssets_DEPRECATED)
+		for(const FClothingAssetData_Legacy& LegacyAsset : ClothingAssets)
 		{
 			LegacyAsset.GetResourceSizeEx(CumulativeResourceSize);
 		}
@@ -3007,7 +3007,7 @@ void USkeletalMesh::BeginDestroy()
 
 #if WITH_APEX_CLOTHING
 	// release clothing assets
-	for (FClothingAssetData_Legacy& Data : ClothingAssets_DEPRECATED)
+	for (FClothingAssetData_Legacy& Data : ClothingAssets)
 	{
 		if (Data.ApexClothingAsset)
 		{
@@ -3133,9 +3133,9 @@ void USkeletalMesh::Serialize( FArchive& Ar )
 		if(Ar.CustomVer(FSkeletalMeshCustomVersion::GUID) < FSkeletalMeshCustomVersion::NewClothingSystemAdded)
 		{
 		// Serialize non-UPROPERTY ApexClothingAsset data.
-			for(int32 Idx = 0; Idx < ClothingAssets_DEPRECATED.Num(); Idx++)
+			for(int32 Idx = 0; Idx < ClothingAssets.Num(); Idx++)
 		{
-				Ar << ClothingAssets_DEPRECATED[Idx];
+				Ar << ClothingAssets[Idx];
 			}
 		}
 
@@ -3527,14 +3527,14 @@ void USkeletalMesh::PostLoad()
 	// Can only do an old-> new clothing asset upgrade in the editor.
 	// And only if APEX clothing is available to upgrade from
 #if WITH_EDITOR && WITH_APEX_CLOTHING
-	if(ClothingAssets_DEPRECATED.Num() > 0)
+	if(ClothingAssets.Num() > 0)
 	{
 		// Upgrade the old deprecated clothing assets in to new clothing assets
 		TMap<int32, TArray<int32>> OldLodMappings; // Map asset index to multiple lod indices
 		TMap<int32, TArray<int32>> OldSectionMappings; // Map asset index to a section per LOD
-		for(int32 AssetIdx = 0; AssetIdx < ClothingAssets_DEPRECATED.Num(); ++AssetIdx)
+		for(int32 AssetIdx = 0; AssetIdx < ClothingAssets.Num(); ++AssetIdx)
 		{
-			FClothingAssetData_Legacy& OldAssetData = ClothingAssets_DEPRECATED[AssetIdx];
+			FClothingAssetData_Legacy& OldAssetData = ClothingAssets[AssetIdx];
 
 			OldLodMappings.Add(AssetIdx);
 			OldSectionMappings.Add(AssetIdx);
@@ -3590,7 +3590,7 @@ void USkeletalMesh::PostLoad()
 
 		// Go back over the old assets and remove them from the skeletal mesh so the indices are preserved while
 		// calculating the LOD and section mappings above.
-		for(int32 AssetIdx = ClothingAssets_DEPRECATED.Num() - 1; AssetIdx >= 0; --AssetIdx)
+		for(int32 AssetIdx = ClothingAssets.Num() - 1; AssetIdx >= 0; --AssetIdx)
 		{
 			ApexClothingUtils::RemoveAssetFromSkeletalMesh(this, AssetIdx, false);
 		}

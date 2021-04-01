@@ -598,6 +598,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, transient, duplicatetransient, Category=SkeletalMesh)
 	TArray<FSkeletalMaterial> Materials;
 
+	// JackGame: added by DQXI
+	UPROPERTY(EditAnywhere, Category=SkeletalMesh)
+	class UMaterialInterface* OutlineMaterial;
+
 	/** List of bones that should be mirrored. */
 	UPROPERTY(EditAnywhere, editfixedsize, Category=Mirroring)
 	TArray<struct FBoneMirrorInfo> SkelMirrorTable;
@@ -652,6 +656,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	class UNodeMappingContainer* GetNodeMappingContainer(class UBlueprint* SourceAsset) const;
+
+	// JackGame: either added by DQXI or ported from earlier UE4 build
+	UPROPERTY(BlueprintReadWrite, Category=Physics)
+	TArray<UPhysicsAsset*> ExtraPhysicsAsset;
 
 #if WITH_EDITORONLY_DATA
 
@@ -748,9 +756,10 @@ public:
 
 #endif
 
+	// JackGame: named ClothingAssets_DEPRECATED in UE4.18, but DQXI names it ClothingAssets
 	/** Legacy clothing asset data, will be converted to new assets after loading */
 	UPROPERTY()
-	TArray<FClothingAssetData_Legacy>		ClothingAssets_DEPRECATED;
+	TArray<FClothingAssetData_Legacy>		ClothingAssets;
 
 	/** Animation Blueprint class to run as a post process for this mesh.
 	 *  This blueprint will be ran before physics, but after the main
@@ -776,6 +785,13 @@ public:
 	 */
 	UPROPERTY(EditAnywhere, editfixedsize, BlueprintReadOnly, Category = Clothing)
 	TArray<UClothingAssetBase*> MeshClothingAssets;
+
+	// JackGame: added by DQXI
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=SkeletalMesh)
+	bool bParticleUse;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=SkeletalMesh)
+	int ParticleUseLOD;
 
 	/** Get a clothing asset from its associated GUID (returns nullptr if no match is found) */
 	UClothingAssetBase* GetClothingAsset(const FGuid& InAssetGuid) const;
