@@ -110,7 +110,7 @@ FArchive& operator<<( FArchive& Ar, FPackageFileSummary& Sum )
 
 				if (!Sum.FileVersionUE4 && !Sum.FileVersionLicenseeUE4)
 				{
-#if WITH_EDITOR
+#if WITH_EDITOR && false
 					// the editor cannot safely load unversioned content
 					UE_LOG(LogLinker, Warning, TEXT("Failed to read package file summary, the file \"%s\" is unversioned and we cannot safely load unversioned files in the editor."), *Ar.GetArchiveName());
 					return Ar;
