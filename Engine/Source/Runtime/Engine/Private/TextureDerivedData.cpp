@@ -960,8 +960,11 @@ static void SerializePlatformData(
 		Ar << PixelFormatString;
 	}
 
-	// JackGame: unknown flag added by DQXI, moves Mips field from 0x10 to 0x18
-	Ar << PlatformData->Unknown10;
+	// JackGame: unknown flag added by DQXI, moves Mips field from 0x10 to 0x14 (bool is serialized as 4-byte int)
+	if (Ar.LicenseeUE4Ver() >= VER_LIC_DQXIS)
+	{
+		Ar << PlatformData->Unknown10;
+	}
 	
 	int32 NumMips = PlatformData->Mips.Num();
 	int32 FirstMipToSerialize = 0;

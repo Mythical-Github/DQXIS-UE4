@@ -2580,6 +2580,10 @@ void FSceneTextureShaderParameters::Bind(const FShaderParameterMap& ParameterMap
 	MobileCustomStencilTextureSampler.Bind(ParameterMap, TEXT("MobileCustomStencilTextureSampler"));
 	//
 	SceneStencilTextureParameter.Bind(ParameterMap,TEXT("SceneStencilTexture"));
+
+	// JackGame: two additional resourceparams?
+	PreviousFrameTexture.Bind(ParameterMap, TEXT("PreviousFrameTexture"));
+	PreviousFrameTextureSampler.Bind(ParameterMap, TEXT("PreviousFrameTextureSampler"));
 }
 
 template< typename ShaderRHIParamRef, typename TRHICmdList >
@@ -2862,6 +2866,14 @@ FArchive& operator<<(FArchive& Ar,FSceneTextureShaderParameters& Parameters)
 	Ar << Parameters.MobileCustomStencilTexture;
 	Ar << Parameters.MobileCustomStencilTextureSampler;
 	Ar << Parameters.SceneStencilTextureParameter;
+
+	// JackGame: two additional resourceparams?
+	if (Ar.LicenseeUE4Ver() >= VER_LIC_DQXIS)
+	{
+		Ar << Parameters.PreviousFrameTexture;
+		Ar << Parameters.PreviousFrameTextureSampler;
+	}
+
 	return Ar;
 }
 

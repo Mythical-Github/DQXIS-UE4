@@ -73,6 +73,10 @@ private:
 	FShaderResourceParameter MobileCustomStencilTextureSampler;
 
 	FShaderResourceParameter SceneStencilTextureParameter;
+
+	// JackGame: two additional resourceparams?
+	FShaderResourceParameter PreviousFrameTexture;
+	FShaderResourceParameter PreviousFrameTextureSampler;
 };
 
 /** Pixel shader parameters needed for deferred passes. */

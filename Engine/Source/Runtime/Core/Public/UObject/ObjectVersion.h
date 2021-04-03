@@ -637,6 +637,10 @@ enum EUnrealEngineObjectUE4Version
 enum EUnrealEngineObjectLicenseeUE4Version
 {
 	VER_LIC_NONE = 0,
+
+	// Used in files saved by our build, and for any unversioned original DQXIS files that are loaded in
+	VER_LIC_DQXIS,
+
 	// - this needs to be the last line (see note below)
 	VER_LIC_AUTOMATIC_VERSION_PLUS_ONE,
 	VER_LIC_AUTOMATIC_VERSION = VER_LIC_AUTOMATIC_VERSION_PLUS_ONE - 1
