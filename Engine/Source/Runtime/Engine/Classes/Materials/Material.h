@@ -465,6 +465,12 @@ public:
 	UPROPERTY(EditAnywhere, Category=Material, AdvancedDisplay)
 	uint32 bAllowNegativeEmissiveColor:1;
 
+	// JackGame: added CellShading & ReverseCulling
+	UPROPERTY(EditAnywhere, Category=Material, AdvancedDisplay)
+	uint32 CellShading:1;
+	UPROPERTY(EditAnywhere, Category=Material, AdvancedDisplay)
+	uint32 ReverseCulling:1;
+
 	/** Number of customized UV inputs to display.  Unconnected customized UV inputs will just pass through the vertex UVs. */
 	UPROPERTY(EditAnywhere, Category=Material, AdvancedDisplay, meta=(ClampMin=0))
 	int32 NumCustomizedUVs;
@@ -525,6 +531,10 @@ public:
 	/** Whether to draw on top of opaque pixels even if behind them. This only has meaning for translucency. */
 	UPROPERTY(EditAnywhere, Category=Translucency, AdvancedDisplay)
 	uint32 bDisableDepthTest:1;
+
+	// JackGame: added bWriteTranslucencyDepth
+	UPROPERTY(EditAnywhere, Category=Translucency, AdvancedDisplay)
+	uint32 bWriteTranslucencyDepth:1;
 
 	/** Whether to generate spherical normals for particles that use this material. */
 	UPROPERTY(EditAnywhere, Category=Material, AdvancedDisplay)
@@ -857,6 +867,10 @@ private:
 	 */
 	UPROPERTY(transient)
 	TArray<UTexture*> ExpressionTextureReferences;
+
+	// JackGame: added StreamingDistanceMultiplier
+	UPROPERTY(EditAnywhere, Category = AdvancedDisplay)
+	float StreamingDistanceMultiplier;
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY()
