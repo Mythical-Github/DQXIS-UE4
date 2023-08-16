@@ -487,6 +487,10 @@ class UStaticMesh : public UObject, public IInterface_CollisionDataProvider, pub
 	UPROPERTY()
 	TArray<FStaticMaterial> StaticMaterials;
 
+	// JackGame: added by DQXI
+	UPROPERTY(EditAnywhere, Category = SkeletalMesh)
+	class UMaterialInterface* OutlineMaterial;
+
 	UPROPERTY()
 	float LightmapUVDensity;
 
