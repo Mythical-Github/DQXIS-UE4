@@ -632,71 +632,71 @@ class ENGINE_API UKismetSystemLibrary : public UBlueprintFunctionLibrary
 	// --- 'Set property by name' functions ------------------------------
 
 	/** Set an int32 property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false"), Category = "UnrealBlueprintModLoader")
 	static void SetIntPropertyByName(UObject* Object, FName PropertyName, int32 Value);
 
 	/** Set an uint8 or enum property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false"), Category = "UnrealBlueprintModLoader")
 	static void SetBytePropertyByName(UObject* Object, FName PropertyName, uint8 Value);
 
 	/** Set a float property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false"), Category = "UnrealBlueprintModLoader")
 	static void SetFloatPropertyByName(UObject* Object, FName PropertyName, float Value);
 
 	/** Set a bool property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false"), Category = "UnrealBlueprintModLoader")
 	static void SetBoolPropertyByName(UObject* Object, FName PropertyName, bool Value);
 
 	/** Set an OBJECT property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false"), Category = "UnrealBlueprintModLoader")
 	static void SetObjectPropertyByName(UObject* Object, FName PropertyName, UObject* Value);
 
 	/** Set a CLASS property by name */
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "false"), Category = "UnrealBlueprintModLoader")
 	static void SetClassPropertyByName(UObject* Object, FName PropertyName, TSubclassOf<UObject> Value);
 
 	/** Set an INTERFACE property by name */
-	UFUNCTION(BlueprintCallable, Category = "Collision", meta = (BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, Category = "Collision", meta = (BlueprintInternalUseOnly = "false"))
 	static void SetInterfacePropertyByName(UObject* Object, FName PropertyName, const FScriptInterface& Value);
 
 	/** Set a NAME property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value" ))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value" ), Category = "UnrealBlueprintModLoader")
 	static void SetNamePropertyByName(UObject* Object, FName PropertyName, const FName& Value);
 
 	/** Set a SOFTOBJECT property by name */
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value"))
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value"), Category = "UnrealBlueprintModLoader")
 	static void SetSoftObjectPropertyByName(UObject* Object, FName PropertyName, const TSoftObjectPtr<UObject>& Value);
 
 	/** Set a SOFTCLASS property by name */
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value"))
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value"), Category = "UnrealBlueprintModLoader")
 	static void SetSoftClassPropertyByName(UObject* Object, FName PropertyName, const TSoftClassPtr<UObject>& Value);
 
 	/** Set a STRING property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value" ))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value" ), Category = "UnrealBlueprintModLoader")
 	static void SetStringPropertyByName(UObject* Object, FName PropertyName, const FString& Value);
 
 	/** Set a TEXT property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value" ))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value" ), Category = "UnrealBlueprintModLoader")
 	static void SetTextPropertyByName(UObject* Object, FName PropertyName, const FText& Value);
 
 	/** Set a VECTOR property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value" ))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value" ), Category = "UnrealBlueprintModLoader")
 	static void SetVectorPropertyByName(UObject* Object, FName PropertyName, const FVector& Value);
 
 	/** Set a ROTATOR property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value" ))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value" ), Category = "UnrealBlueprintModLoader")
 	static void SetRotatorPropertyByName(UObject* Object, FName PropertyName, const FRotator& Value);
 
 	/** Set a LINEAR COLOR property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value" ))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value" ), Category = "UnrealBlueprintModLoader")
 	static void SetLinearColorPropertyByName(UObject* Object, FName PropertyName, const FLinearColor& Value);
 
 	/** Set a TRANSFORM property by name */
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value" ))
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value" ), Category = "UnrealBlueprintModLoader")
 	static void SetTransformPropertyByName(UObject* Object, FName PropertyName, const FTransform& Value);
 
 	/** Set a CollisionProfileName property by name */
-	UFUNCTION(BlueprintCallable, CustomThunk, meta = (BlueprintInternalUseOnly = "true", AutoCreateRefTerm = "Value"))
+	UFUNCTION(BlueprintCallable, CustomThunk, meta = (BlueprintInternalUseOnly = "false", AutoCreateRefTerm = "Value"), Category = "UnrealBlueprintModLoader")
 	static void SetCollisionProfileNameProperty(UObject* Object, FName PropertyName, const FCollisionProfileName& Value);
 
 	DECLARE_FUNCTION(execSetCollisionProfileNameProperty)
@@ -714,7 +714,7 @@ class ENGINE_API UKismetSystemLibrary : public UBlueprintFunctionLibrary
 	}
 
 	/** Set a custom structure property by name */
-	UFUNCTION(BlueprintCallable, CustomThunk, meta = (BlueprintInternalUseOnly = "true", CustomStructureParam = "Value", AutoCreateRefTerm = "Value"))
+	UFUNCTION(BlueprintCallable, CustomThunk, meta = (BlueprintInternalUseOnly = "false", CustomStructureParam = "Value", AutoCreateRefTerm = "Value"), Category = "UnrealBlueprintModLoader")
 	static void SetStructurePropertyByName(UObject* Object, FName PropertyName, const FGenericStruct& Value);
 
 	static void Generic_SetStructurePropertyByName(UObject* OwnerObject, FName StructPropertyName, const void* SrcStructAddr);
